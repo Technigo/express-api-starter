@@ -17,13 +17,37 @@ app.get('/', (req, res) => {
 });
 
 app.get('/movies', (req, res) => {
-  res.status(200).json(disneyMovies);
+  console.log(req.query);
+  const { title, year } = req.query;
+  let filteredMovies = disneyMovies;
+
+  if (title) {
+    filteredMovies = filteredMovies.filter((movie) =>
+      movie.title.toLocaleLowerCase().includes(title.toLocaleLowerCase())
+    );
+  }
+  if (year) {
+    filteredMovies = filteredMovies.filter((movie) => {
+      console.log(movie);
+      if (movie['Release date (datetime)'] === null) {
+        return false;
+      }
+      return movie['Release date (datetime)']
+        .toLocaleLowerCase()
+        .includes(year.toLocaleLowerCase());
+    });
+  }
+  res.status(200).json(filteredMovies);
 });
+
 app.get('/movies/:id', (req, res) => {
   const singleMovie = disneyMovies.find((movie) => {
     return movie.imdb_id === req.params.id;
   });
-  res.status(200).json(singleMovie);
+  if (singleMovie) {
+    return res.status(200).json(singleMovie);
+  }
+  return res.status(404).json({ error: 'Oh no there is no movie :(' });
 });
 
 // Start the server
