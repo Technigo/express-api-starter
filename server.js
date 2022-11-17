@@ -18,8 +18,14 @@ app.get('/', (req, res) => {
 
 // Start defining your routes here
 app.get('/seasons', (req, res) => {
-  res.status(200).json({premierLeague: premierLeague});
+  const uniqueSeason = new Set()
+  for (let i = 0; i < premierLeague.length; i++) {
+    uniqueSeason.add(premierLeague[i].playedSeason)
+  }
+  const uniqueSeasonArray = Array.from(uniqueSeason)
+  return res.status(200).json({'seasons': uniqueSeasonArray});
 });
+
 
 app.get('/season/:id', (req, res) => {
   const singleSeason = premierLeague.filter((season) => {
