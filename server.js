@@ -32,7 +32,7 @@ app.get('/season/:id', (req, res) => {
     return season.playedSeason === req.params.id;
   });
   if (singleSeason) {
-    return res.status(200).json(singleSeason);
+    return res.status(200).json({'uniqueseason': singleSeason});
   }
   return res.status(404).json({ error: 'Oops! No season found!' });
 });
