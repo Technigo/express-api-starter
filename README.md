@@ -1,10 +1,12 @@
-# Express API Starter Project
+# Project Express API
 
-This project includes the packages and babel setup for an express server, and is just meant to make things a little simpler to get up and running with.
+Replace this readme with your own information about your project.
 
-## Getting started
+Start by briefly describing the assignment in a sentence or two. Keep it short and to the point.
 
-Install dependencies with `npm install`, then start the server by running `npm run dev`
+## The problem
+
+Describe how you approached to problem, and what tools and techniques you used to solve it. How did you plan? What technologies did you use? If you had more time, what would be next?
 
 ## View it live
 
