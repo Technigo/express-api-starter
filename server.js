@@ -14,6 +14,43 @@ app.get("/", (request, response) => {
   response.json(listEndpoints(app));
 });
 
+// get all books 
+app.get("/books", (request, response) => {
+  response.status(200).json({
+    success: true,
+    message: "OK",
+    body: {
+      books: booksData
+    }
+  });
+});
+
+
+
+// books by author
+app.get("/books/author/:author", (request, response) => {
+  const searchResults = booksData.filter((b) => b.authors.toLowerCase().includes(request.params.author.toLowerCase()));
+
+  if (searchResults.length > 0) {
+    response.status(200).json({
+      success: true,
+      message: "OK",
+      body: {
+        searchResults
+      }
+    });
+  } else {
+    response.status(404).json({
+      success: false,
+      message: "No books found matching the given author",
+      body: {}
+    });
+  }
+});
+
+
+// books by id
+
 app.get("/books/:id", (request, response) => {
   const book = booksData.find((b) => b.bookID === Number(request.params.id));
 
@@ -34,6 +71,7 @@ app.get("/books/:id", (request, response) => {
     });
   }
 });
+
 
 // get the top 10 suggested books
 app.get("/suggest-books", (request, response) => {
