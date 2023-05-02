@@ -14,13 +14,18 @@ app.get("/", (request, response) => {
   response.json(listEndpoints(app));
 });
 
-// get all books 
+// get all books with optional average_rating filter
+// http://localhost:8080/books?minRating=4.5
+
 app.get("/books", (request, response) => {
+  const minRating = parseFloat(request.query.minRating) || 0;
+  const filteredBooks = booksData.filter((b) => b.average_rating >= minRating);
+
   response.status(200).json({
     success: true,
     message: "OK",
     body: {
-      books: booksData
+      books: filteredBooks
     }
   });
 });
@@ -93,6 +98,16 @@ app.get("/suggest-books", (request, response) => {
       body: {}
     });
   }
+});
+
+// Dummy endpoint to search books by genre
+app.get("/books/genre/:genre", (request, response) => {
+  response.status(501).json({
+    success: false,
+    message: "Not Implemented",
+    description: "This endpoint is not yet implemented",
+    body: {}
+  });
 });
 
 app.listen(port, () => {
